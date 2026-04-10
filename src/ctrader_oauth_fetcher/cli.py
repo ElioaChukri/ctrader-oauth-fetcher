@@ -1,3 +1,4 @@
+import time
 import argparse
 import webbrowser
 import json
@@ -7,8 +8,10 @@ from urllib.parse import urlparse, parse_qs, urlencode
 from urllib.request import urlopen
 from urllib.error import HTTPError
 
+
 def eprint(msg: str) -> None:
     print(msg, file=sys.stderr)
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -21,7 +24,9 @@ def main():
         help="Client Secret used to authorize the application",
     )
     parser.add_argument(
-        "--scope", default="trading", help="The scope of the permissions to authorize for the application. Must be one of 'accounts' or 'trading'",
+        "--scope",
+        default="trading",
+        help="The scope of the permissions to authorize for the application. Must be one of 'accounts' or 'trading'",
     )
     parser.add_argument(
         "--redirect-uri",
@@ -81,7 +86,6 @@ def main():
 
     print("Authorization code received. Exchanging for tokens...")
     url_params = urlencode(
-
         {
             "grant_type": "authorization_code",
             "code": auth_code,
@@ -101,7 +105,10 @@ def main():
         eprint(f"Token exchange failed ({e.code}): {body}")
         sys.exit(1)
 
+    expires_at = time.time() + tokens["expiresIn"]
+
     print("Tokens received successfully.\n")
     print(f"Access token:  {tokens['accessToken']}")
     print(f"Refresh token: {tokens['refreshToken']}")
     print(f"Expires in:    {tokens['expiresIn']} seconds")
+    print(f"Expires at:    {int(expires_at)} (epoch time)")

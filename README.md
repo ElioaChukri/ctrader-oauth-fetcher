@@ -52,11 +52,12 @@ ctrader-oauth-fetcher \
 On success, the tool outputs the token response:
 
 ```
-Tokens Received successfully.
+Tokens received successfully.
 
-Access token: <TOKEN>
+Access token:  <TOKEN>
 Refresh token: <TOKEN>
-Expires in: <SECONDS> seconds
+Expires in:    <SECONDS> seconds
+Expires at:    <UNIX-EPOCH> (epoch time)
 ```
 
 ## Getting cTrader API Credentials
